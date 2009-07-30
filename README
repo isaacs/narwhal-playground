@@ -1,0 +1,5 @@
+This is a repo for my experiments and scripts written on top of Narwhal.
+
+The goal is to eventually replace php with javascript as my CLI language of choice.
+Of course, bash is best for many tasks, but for anything non-trivial, it's usually
+better to use a more friendly language.
