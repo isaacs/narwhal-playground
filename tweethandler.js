@@ -1,6 +1,6 @@
 #!/usr/bin/env narwhal
 
-// */5 * * * * narwhal /Users/isaacs/dev/jack/narwhal-playground/tweethandler.js
+// */5 * * * * /Users/isaacs/dev/jack/narwhal-playground/tweethandler.js
 
 var user = "izs",
 	servers = [
@@ -52,8 +52,9 @@ file.write(system.env.HOME+'/.plan', data.text);
 
 
 // if adium running, set the chat status with some applescript
+//@TODO An applescript module would be pretty tight.
 if (+(os.command("ps aux | grep Adium | grep -v grep | wc -l"))) {
-	os.command('osascript -e '+os.enquote(
+	os.popen('osascript -e '+os.enquote(
 		'tell application "Adium" to '+
 		'set status message of every account to '+
 		'"' + data.text.replace(/([\\"])/g,'\\$1') + '"'
@@ -61,11 +62,12 @@ if (+(os.command("ps aux | grep Adium | grep -v grep | wc -l"))) {
 }
 
 // just kick off the process, don't bother waiting for the response.
-// @TODO Fill out the os-platform stuff to support sending a kill
-// @TODO signal after a certain amount of time has passed.
+//@TODO Fill out the os-platform stuff to support sending a kill
+// signal after a certain amount of time has passed.
 servers.forEach(function (server) {
-	os.popen(system.env.HOME+'/scripts/sendplans.sh '+os.enquote(server));
-	// os.popen('rsync '+system.env.HOME+'/.plan '+server+':~');
+	//@NOTE The popen will let the process keep going as long as it needs to,
+	// even if this javascript program ends ahead of time, which it will.
+	os.popen('rsync --timeout=1 '+system.env.HOME+'/.plan '+server+':~/');
 });
 
 
