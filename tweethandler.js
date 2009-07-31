@@ -31,7 +31,7 @@ if (
 	|| data.in_reply_to_user_id !== null
 	|| data.in_reply_to_status_id !== null
 	|| data.text.substr(0,1) === '@'
-) exit(0);
+) os.exit(0);
 
 
 // only handle new tweets, so we don't keep updating over and over again.
@@ -53,12 +53,14 @@ file.write(system.env.HOME+'/.plan', data.text);
 
 // if adium running, set the chat status with some applescript
 //@TODO An applescript module would be pretty tight.
-if (+(os.command("ps aux | grep Adium | grep -v grep | wc -l"))) {
+if (+(os.command("ps aux | grep Adium | grep -v grep | wc -l"))) try {
 	os.popen('osascript -e '+os.enquote(
 		'tell application "Adium" to '+
 		'set status message of every account to '+
 		'"' + data.text.replace(/([\\"])/g,'\\$1') + '"'
 	));
+} catch (ex) {
+	// do nothing. it's ok if this fails, no biggie.
 }
 
 // just kick off the process, don't bother waiting for the response.
