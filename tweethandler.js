@@ -31,6 +31,8 @@ data.forEach(function (data) {
 		|| data.in_reply_to_user_id !== null
 		|| data.in_reply_to_status_id !== null
 		|| data.text.substr(0,1) === '@'
+		// also skip "public" @-replies
+		|| data.text.substr(1,1) === '@'
 	) return;
 
 
