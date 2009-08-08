@@ -19,7 +19,12 @@ try {
 		).decodeToString("UTF-8")
 	);
 } catch (ex) {
-	system.stderr.print("Error loading tweet data.").print(ex.message);
+
+	// It made sense to show an error about this, but Twitter's under attack,
+	// and getting emails every 5 minutes when the API is down is just not fun.
+	// Fucking russian mobsters!
+
+	// system.stderr.print("Error loading tweet data.").print(ex.message);
 	os.exit(1);
 }
 
