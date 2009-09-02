@@ -52,8 +52,6 @@ data.forEach(function (data) {
 	}
 	if (last_tweet >= created_at) os.exit(0);
 	
-	file.write(system.env.HOME+'/.last_tweet', created_at.toString());
-
 	// write the plan, so we're set for fingering.
 	file.write(system.env.HOME+'/.plan', data.text);
 
@@ -61,6 +59,7 @@ data.forEach(function (data) {
 	//@TODO An applescript module would be pretty tight.
 	//@TODO Need a cross-platform way to figure out if a program is running?
 	// Grep and wc can be simulated in JS, but ps is rather low-level.
+	var success = true;
 	if (+(os.command("ps aux | grep Adium | grep -v grep | wc -l"))) try {
 		os.popen('osascript -e '+os.enquote(
 			'tell application "Adium" to '+
@@ -69,8 +68,13 @@ data.forEach(function (data) {
 		));
 	} catch (ex) {
 		// do nothing. it's ok if this fails, no biggie.
+		success = false;
 	}
-
+	
+	// only update update the counter if the adium setting succeeded.
+    if (success) file.write(system.env.HOME+'/.last_tweet', created_at.toString());
+	
+    
 	// just kick off the process, don't bother waiting for the response.
 	//@TODO Fill out the os-platform stuff to support sending a kill
 	// signal after a certain amount of time has passed.
