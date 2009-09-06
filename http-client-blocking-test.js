@@ -38,25 +38,25 @@ var sleeper4 = HTTPClient({url:"http://google.com"});
 
 timer.lap("\n\ninit\t");
 
-sleeper1.connect();
+sleeper1.result = sleeper1.connect();
 timer.lap("sleep5 connect");
 
-sleeper2.connect();
+sleeper2.result = sleeper2.connect();
 timer.lap("sleep6 connect");
 
-sleeper3.connect();
+sleeper3.result = sleeper3.connect();
 timer.lap("sleep15 connect");
 
-sleeper4.connect();
+sleeper4.result = sleeper4.connect();
 timer.lap("google connect");
 
-HTTPClient.decode(sleeper1.read()).body.forEach(writer(system.stderr));
-timer.lap("sleep5 read");
+HTTPClient.decode(sleeper1.result).body.forEach(writer(system.stderr));
+timer.lap("sleep5 output");
 
-HTTPClient.decode(sleeper2.read()).body.forEach(writer(system.stderr));
-timer.lap("sleep6 read");
+HTTPClient.decode(sleeper2.result).body.forEach(writer(system.stderr));
+timer.lap("sleep6 output");
 
-HTTPClient.decode(sleeper4.read()).body.forEach(writer(system.stderr));
-timer.lap("google read");
+HTTPClient.decode(sleeper4.result).body.forEach(writer(system.stderr));
+timer.lap("google output");
 
 timer.print();
