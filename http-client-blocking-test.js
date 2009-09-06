@@ -4,12 +4,7 @@
 
 var HTTPClient = require("http-client").HTTPClient;
 
-var writer = function (stream) {
-    return function (m) {
-        stream.write(m);
-        stream.flush();
-    };
-};
+var noop = function () {}
 
 var timer = (function () {
     var tick, tock, laps = [];
@@ -50,13 +45,13 @@ timer.lap("sleep15 connect");
 sleeper4 = sleeper4.connect(true).body;
 timer.lap("google connect");
 
-sleeper1.forEach(writer(system.stderr));
+sleeper1.forEach(noop);
 timer.lap("sleep5 output");
 
-sleeper2.forEach(writer(system.stderr));
+sleeper2.forEach(noop);
 timer.lap("sleep6 output");
 
-sleeper4.forEach(writer(system.stderr));
+sleeper4.forEach(noop);
 timer.lap("google output");
 
 timer.print();
