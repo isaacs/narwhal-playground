@@ -38,6 +38,8 @@ data.forEach(function (data) {
 		|| data.text.substr(0,1) === '@'
 		// also skip "public" @-replies
 		|| data.text.substr(1,1) === '@'
+		// also skip RT @soandso
+		|| data.text.substr(0,4).toUpperCase() === 'RT @'
 	) return;
 
 
