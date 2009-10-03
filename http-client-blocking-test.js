@@ -1,6 +1,6 @@
-// might want to pipe 2>/dev/null when running this script.  It's noisy.
-// It demonstrates how the HTTPClient can handle multiple concurrent requests,
-// only blocking once you decide you want to read the request body stream.
+// This demonstrates how the HTTPClient can handle multiple concurrent requests,
+// only blocking once you decide you want to read the request body stream,
+// and letting other requests finish in the background while doing so.
 
 var HTTPClient = require("http-client").HTTPClient;
 
@@ -24,10 +24,10 @@ var timer = (function () {
 })();
 
 timer.start();
-var sleeper1 = HTTPClient({url:"http://localhost/sandbox/sleep.php?sleep=5"});
-var sleeper2 = HTTPClient({url:"http://localhost/sandbox/sleep.php?sleep=6"});
+var sleeper1 = HTTPClient({url:"http://foohack.com/tests/sleep.php?sleep=5"});
+var sleeper2 = HTTPClient({url:"http://foohack.com/tests/sleep.php?sleep=6"});
 // this one never gets read, so we don't have to wait 15 seconds.
-var sleeper3 = HTTPClient({url:"http://localhost/sandbox/sleep.php?sleep=15"});
+var sleeper3 = HTTPClient({url:"http://foohack.com/tests/sleep.php?sleep=15"});
 var sleeper4 = HTTPClient({url:"http://google.com"});
 
 
