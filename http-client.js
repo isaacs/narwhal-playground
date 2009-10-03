@@ -6,7 +6,7 @@ var result = HTTPClient({
         // headers (object), and body (forEach()able) could also be put here.
         // body can also be push()ed onto using the write() sugar method below.
         method: "GET",
-        url : "http://localhost/sandbox/phpinfo.php"
+        url : "http://example.com/"
     })
     .set("method", "PUT") // changed my mind
     .setHeader("X-Some-Header", "some value") // add headers like this
@@ -16,9 +16,9 @@ var result = HTTPClient({
     .write("a=b") // write can be called multiple times
     .set({ method : "POST" }) // changed my mind again, this time with an object.
     .setHeader("X-Set-After-Writing", "and it works!") // anything goes before the connect()
-    .connect() // writes and sets are now meaningless, but doesn't block until we read()
-    .read(); // returns a response object. end of the line. (implicitly calls connect() if necessary)
-// alternatively, .finish() is an alias for .connect().read()
+    .connect(); // writes and sets are now meaningless, but doesn't block until we forEach on the body.
+
+print(JSON.stringify(result));
 
 print(result.statusText);
 for (var i in result.headers) {
